@@ -1,0 +1,773 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     30292,        763]
+NotebookOptionsPosition[     30036,        749]
+NotebookOutlinePosition[     30391,        765]
+CellTagsIndexPosition[     30348,        762]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"output", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"jump", "=", "1"}], ";", 
+  RowBox[{"calljump", "=", "0"}], ";", 
+  RowBox[{"subprogram", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"string", "=", 
+   RowBox[{
+    RowBox[{"Import", "[", 
+     RowBox[{"\"\<D:\\\\Sys.vm\>\"", ",", "\"\<Text\>\""}], "]"}], "<>", 
+    "\"\<\\nsubprogram\\n\>\"", "<>", 
+    RowBox[{"Import", "[", 
+     RowBox[{"\"\<D:\\\\Class1.vm\>\"", ",", "\"\<Text\>\""}], "]"}], "<>", 
+    "\"\<\\nsubprogram\\n\>\"", "<>", 
+    RowBox[{"Import", "[", 
+     RowBox[{"\"\<D:\\\\Class2.vm\>\"", ",", "\"\<Text\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"string", "=", 
+   RowBox[{"Apply", "[", 
+    RowBox[{"StringJoin", ",", 
+     RowBox[{"StringSplit", "[", 
+      RowBox[{"string", ",", "\"\<\\n\>\""}], "]"}], ",", 
+     RowBox[{"{", "1", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"string", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{"{", "\"\<call Sys.init 0\>\"", "}"}], ",", "string"}], "]"}]}], 
+  ";", 
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"i", "=", "1"}], ",", 
+    RowBox[{"i", "\[LessEqual]", 
+     RowBox[{"Length", "[", "string", "]"}]}], ",", 
+    RowBox[{"i", "++"}], ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"string", "[", 
+       RowBox[{"[", "i", "]"}], "]"}], "=", 
+      RowBox[{"StringTrim", "[", 
+       RowBox[{"StringTrim", "[", 
+        RowBox[{
+         RowBox[{"string", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], ",", 
+         RowBox[{"\"\<//\>\"", "~~", "___"}]}], "]"}], "]"}]}], ";", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"StringLength", "[", 
+         RowBox[{"string", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], "]"}], "\[Equal]", "0"}], ",", 
+       RowBox[{
+        RowBox[{"string", "=", 
+         RowBox[{"Drop", "[", 
+          RowBox[{"string", ",", 
+           RowBox[{"{", "i", "}"}]}], "]"}]}], ";", 
+        RowBox[{"i", "--"}]}]}], "]"}]}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "\[LessEqual]", 
+    RowBox[{"Length", "[", "string", "]"}]}], ",", 
+   RowBox[{"i", "++"}], ",", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", "\"\<subprogram\>\""}], "]"}], 
+      ",", 
+      RowBox[{"subprogram", "++"}]}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push constant \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "14"}], "]"}]}], ",", 
+           "\"\<D=A\>\"", ",", "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", "\"\<M=M+1\>\""}], "}"}]}],
+         "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<add\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<M=M+D\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<sub\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<M=M-D\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<and\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<M=D&M\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<or\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<M=D|M\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<neg\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=-M\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<not\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=!M\>\""}], 
+          "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<eq\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<D=M-D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=-1\>\"", ",", 
+           RowBox[{"\"\<@jump\>\"", "<>", 
+            RowBox[{"ToString", "[", "jump", "]"}]}], ",", "\"\<D;JEQ\>\"", 
+           ",", "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=0\>\"", ",", 
+           RowBox[{"\"\<(jump\>\"", "<>", 
+            RowBox[{"ToString", "[", 
+             RowBox[{"jump", "++"}], "]"}], "<>", "\"\<)\>\""}]}], "}"}]}], 
+        "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<lt\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<D=M-D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=-1\>\"", ",", 
+           RowBox[{"\"\<@jump\>\"", "<>", 
+            RowBox[{"ToString", "[", "jump", "]"}]}], ",", "\"\<D;JLT\>\"", 
+           ",", "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=0\>\"", ",", 
+           RowBox[{"\"\<(jump\>\"", "<>", 
+            RowBox[{"ToString", "[", 
+             RowBox[{"jump", "++"}], "]"}], "<>", "\"\<)\>\""}]}], "}"}]}], 
+        "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"string", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], "==", "\"\<gt\>\""}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<A=A-1\>\"", ",", "\"\<D=M-D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=-1\>\"", ",", 
+           RowBox[{"\"\<@jump\>\"", "<>", 
+            RowBox[{"ToString", "[", "jump", "]"}]}], ",", "\"\<D;JGT\>\"", 
+           ",", "\"\<@SP\>\"", ",", "\"\<A=M-1\>\"", ",", "\"\<M=0\>\"", ",", 
+           RowBox[{"\"\<(jump\>\"", "<>", 
+            RowBox[{"ToString", "[", 
+             RowBox[{"jump", "++"}], "]"}], "<>", "\"\<)\>\""}]}], "}"}]}], 
+        "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push static \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<@Text\>\"", "<>", 
+            RowBox[{"ToString", "[", "subprogram", "]"}], "<>", "\"\<.\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "12"}], "]"}]}], ",", 
+           "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", "\"\<M=M+1\>\""}], "}"}]}],
+         "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop static \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@Text\>\"", "<>", 
+            RowBox[{"ToString", "[", "subprogram", "]"}], "<>", "\"\<.\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "11"}], "]"}]}], ",", 
+           "\"\<M=D\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push local \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@LCL\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "11"}], "]"}]}], ",", 
+           "\"\<A=D+A\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop local \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@LCL\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "10"}], "]"}]}], ",", 
+           "\"\<D=D+A\>\"", ",", "\"\<@R13\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@R13\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push argument \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@ARG\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "14"}], "]"}]}], ",", 
+           "\"\<A=D+A\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop argument \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@ARG\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "13"}], "]"}]}], ",", 
+           "\"\<D=D+A\>\"", ",", "\"\<@R13\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@R13\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push this \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@THIS\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "10"}], "]"}]}], ",", 
+           "\"\<A=D+A\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop this \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@THIS\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "9"}], "]"}]}], ",", 
+           "\"\<D=D+A\>\"", ",", "\"\<@R13\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@R13\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push that \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@THAT\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "10"}], "]"}]}], ",", 
+           "\"\<A=D+A\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop that \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<@THAT\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "9"}], "]"}]}], ",", 
+           "\"\<D=D+A\>\"", ",", "\"\<@R13\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@R13\>\"", ",", "\"\<A=M\>\"", ",", 
+           "\"\<M=D\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push pointer \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"pos", "=", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringDrop", "[", 
+          RowBox[{
+           RowBox[{"string", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", "13"}], "]"}], "]"}]}], ";", 
+       RowBox[{"output", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"output", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\"\<@\>\"", "<>", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"3", "+", "pos"}], "]"}]}], ",", "\"\<D=M\>\"", ",", 
+            "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", 
+            "\"\<@SP\>\"", ",", "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}]}], 
+     "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop pointer \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"pos", "=", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringDrop", "[", 
+          RowBox[{
+           RowBox[{"string", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", "12"}], "]"}], "]"}]}], ";", 
+       RowBox[{"output", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"output", ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+            "\"\<D=M\>\"", ",", 
+            RowBox[{"\"\<@\>\"", "<>", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"3", "+", "pos"}], "]"}]}], ",", "\"\<M=D\>\""}], 
+           "}"}]}], "]"}]}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<push temp \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"pos", "=", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringDrop", "[", 
+          RowBox[{
+           RowBox[{"string", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", "10"}], "]"}], "]"}]}], ";", 
+       RowBox[{"output", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"output", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"\"\<@\>\"", "<>", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"5", "+", "pos"}], "]"}]}], ",", "\"\<D=M\>\"", ",", 
+            "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", 
+            "\"\<@SP\>\"", ",", "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}]}], 
+     "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<pop temp \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"pos", "=", 
+        RowBox[{"ToExpression", "[", 
+         RowBox[{"StringDrop", "[", 
+          RowBox[{
+           RowBox[{"string", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", "9"}], "]"}], "]"}]}], ";", 
+       RowBox[{"output", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"output", ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<@SP\>\"", ",", "\"\<M=M-1\>\"", ",", "\"\<A=M\>\"", ",", 
+            "\"\<D=M\>\"", ",", 
+            RowBox[{"\"\<@\>\"", "<>", 
+             RowBox[{"ToString", "[", 
+              RowBox[{"5", "+", "pos"}], "]"}]}], ",", "\"\<M=D\>\""}], 
+           "}"}]}], "]"}]}]}]}], "]"}], ";", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<label \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{"\"\<(Label_\>\"", "<>", 
+           RowBox[{"StringDrop", "[", 
+            RowBox[{
+             RowBox[{"string", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], ",", "6"}], "]"}], "<>", 
+           "\"\<)\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<goto \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\"\<@Label_\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "5"}], "]"}]}], ",", 
+           "\"\<0;JMP\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", 
+        RowBox[{"\"\<if-goto \>\"", "~~", "__"}]}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@SP\>\"", ",", "\"\<AM=M-1\>\"", ",", "\"\<D=M\>\"", ",", 
+           RowBox[{"\"\<@Label_\>\"", "<>", 
+            RowBox[{"StringDrop", "[", 
+             RowBox[{
+              RowBox[{"string", "[", 
+               RowBox[{"[", "i", "]"}], "]"}], ",", "8"}], "]"}]}], ",", 
+           "\"\<D;JNE\>\""}], "}"}]}], "]"}]}]}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{
+         RowBox[{"string", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], ",", 
+         RowBox[{"\"\<function \>\"", "~~", "__"}]}], "]"}], ",", 
+       RowBox[{
+        RowBox[{"p", "=", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"string", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ";", 
+        RowBox[{"k", "=", 
+         RowBox[{"ToExpression", "[", 
+          RowBox[{"p", "[", 
+           RowBox[{"[", "3", "]"}], "]"}], "]"}]}], ";", 
+        RowBox[{"output", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{"output", ",", 
+           RowBox[{"{", 
+            RowBox[{"\"\<(\>\"", "<>", 
+             RowBox[{"p", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "<>", "\"\<)\>\""}], "}"}]}], 
+          "]"}]}], ";", 
+        RowBox[{"While", "[", 
+         RowBox[{
+          RowBox[{"k", ">", "0"}], ",", 
+          RowBox[{
+           RowBox[{"k", "--"}], ";", 
+           RowBox[{"output", "=", 
+            RowBox[{"Join", "[", 
+             RowBox[{"output", ",", 
+              RowBox[{"{", 
+               RowBox[{
+               "\"\<@0\>\"", ",", "\"\<D=A\>\"", ",", "\"\<@SP\>\"", ",", 
+                "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+                "\"\<M=M+1\>\""}], "}"}]}], "]"}]}]}]}], "]"}]}]}], "]"}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{
+         RowBox[{"string", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], ",", 
+         RowBox[{"\"\<call \>\"", "~~", "__"}]}], "]"}], ",", 
+       RowBox[{
+        RowBox[{"p", "=", 
+         RowBox[{"StringSplit", "[", 
+          RowBox[{"string", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], "]"}]}], ";", 
+        RowBox[{"output", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{"output", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"\"\<@calljump\>\"", "<>", 
+              RowBox[{"ToString", "[", "calljump", "]"}]}], ",", 
+             "\"\<D=A\>\"", ",", "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", 
+             "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", "\"\<M=M+1\>\"", ",", 
+             "\"\<@LCL\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+             "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+             "\"\<M=M+1\>\"", ",", "\"\<@ARG\>\"", ",", "\"\<D=M\>\"", ",", 
+             "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", 
+             "\"\<@SP\>\"", ",", "\"\<M=M+1\>\"", ",", "\"\<@THIS\>\"", ",", 
+             "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", "\"\<A=M\>\"", ",", 
+             "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", "\"\<M=M+1\>\"", ",", 
+             "\"\<@THAT\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@SP\>\"", ",", 
+             "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", ",", 
+             "\"\<M=M+1\>\"", ",", 
+             RowBox[{"\"\<@\>\"", "<>", 
+              RowBox[{"ToString", "[", 
+               RowBox[{
+                RowBox[{"ToExpression", "[", 
+                 RowBox[{"p", "[", 
+                  RowBox[{"[", "3", "]"}], "]"}], "]"}], "+", "5"}], "]"}]}], 
+             ",", "\"\<D=A\>\"", ",", "\"\<@SP\>\"", ",", "\"\<D=M-D\>\"", 
+             ",", "\"\<@ARG\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@SP\>\"", 
+             ",", "\"\<D=M\>\"", ",", "\"\<@LCL\>\"", ",", "\"\<M=D\>\"", ",", 
+             RowBox[{"\"\<@\>\"", "<>", 
+              RowBox[{"p", "[", 
+               RowBox[{"[", "2", "]"}], "]"}]}], ",", "\"\<0;JMP\>\"", ",", 
+             RowBox[{"\"\<(calljump\>\"", "<>", 
+              RowBox[{"ToString", "[", 
+               RowBox[{"calljump", "++"}], "]"}], "<>", "\"\<)\>\""}]}], 
+            "}"}]}], "]"}]}]}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{"StringMatchQ", "[", 
+       RowBox[{
+        RowBox[{"string", "[", 
+         RowBox[{"[", "i", "]"}], "]"}], ",", "\"\<return\>\""}], "]"}], ",", 
+      RowBox[{"output", "=", 
+       RowBox[{"Join", "[", 
+        RowBox[{"output", ",", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<@LCL\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@R13\>\"", ",", 
+           "\"\<M=D\>\"", ",", "\"\<@5\>\"", ",", "\"\<A=D-A\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@R14\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@SP\>\"", ",", "\"\<AM=M-1\>\"", ",", "\"\<D=M\>\"", ",", 
+           "\"\<@ARG\>\"", ",", "\"\<A=M\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@ARG\>\"", ",", "\"\<D=M+1\>\"", ",", "\"\<@SP\>\"", ",", 
+           "\"\<M=D\>\"", ",", "\"\<@R13\>\"", ",", "\"\<D=M\>\"", ",", 
+           "\"\<@1\>\"", ",", "\"\<A=D-A\>\"", ",", "\"\<D=M\>\"", ",", 
+           "\"\<@THAT\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@R13\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@2\>\"", ",", "\"\<A=D-A\>\"", ",", 
+           "\"\<D=M\>\"", ",", "\"\<@THIS\>\"", ",", "\"\<M=D\>\"", ",", 
+           "\"\<@R13\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@3\>\"", ",", 
+           "\"\<A=D-A\>\"", ",", "\"\<D=M\>\"", ",", "\"\<@ARG\>\"", ",", 
+           "\"\<M=D\>\"", ",", "\"\<@R13\>\"", ",", "\"\<D=M\>\"", ",", 
+           "\"\<@4\>\"", ",", "\"\<A=D-A\>\"", ",", "\"\<D=M\>\"", ",", 
+           "\"\<@LCL\>\"", ",", "\"\<M=D\>\"", ",", "\"\<@R14\>\"", ",", 
+           "\"\<A=M\>\"", ",", "\"\<0;JMP\>\""}], "}"}]}], "]"}]}]}], 
+     "]"}]}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"output", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "\"\<@256\>\"", ",", "\"\<D=A\>\"", ",", "\"\<@SP\>\"", ",", 
+       "\"\<M=D\>\""}], "}"}], ",", "output"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<D:\\\\StaticsTest.asm\>\"", ",", " ", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"#", "<>", "\"\<\\n\>\""}], ")"}], "&"}], ",", " ", 
+      "output"}], "]"}], "]"}], ",", "\"\<Text\>\""}], "]"}]}], "Input",
+ CellChangeTimes->{{3.6882722057277946`*^9, 3.688272222841025*^9}}]
+},
+WindowSize->{1350, 686},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (2016\:5e748\:670817\
+\:65e5)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 29474, 727, 2547, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
